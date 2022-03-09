@@ -2,9 +2,8 @@
   "name": "youtube-clone",
   "version": "1.0.0",
   "description": "implement youtube site with using (Simple Cloning)",
-  "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node index.js"
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "repository": {
     "type": "git",
