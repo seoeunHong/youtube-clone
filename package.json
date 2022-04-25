@@ -18,20 +18,25 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
+    "cross-fetch": "^3.1.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-session": "^1.17.2",
     "mongoose": "^6.2.9",
-    "moongoose": "^0.0.5",
     "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
     "pug": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.2"
   }
 }
