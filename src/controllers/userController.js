@@ -134,6 +134,73 @@ export const logout = (req, res) => {
   return res.redirect('/');
 };
 
-export const edit = (req, res) => res.send('Edit User');
+export const getEdit = (req, res) => {
+  return res.render('edit-profile', {pageTitle: 'Edit Profile'});
+};
+
+export const postEdit = async (req, res) => {
+  const {
+    session: {
+      user: {_id, avatarUrl},
+    },
+    body: {name, email, username, location},
+    file,
+  } = req;
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      avatarUrl: file ? file.path : avatarUrl,
+      name,
+      email,
+      username,
+      location,
+    },
+    {new: true},
+  );
+  req.session.user = updatedUser;
+
+  return res.redirect('/users/edit');
+};
+
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return res.redirect('/');
+  }
+  return res.render('change-password', {pageTitle: 'Change Password'});
+};
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: {_id},
+    },
+    body: {oldPassword, newPassword, newPasswordConform},
+  } = req;
+  const user = await User.findById(_id);
+  const ok = await bcrypt.compare(oldPassword, user.password);
+  if (!ok) {
+    return res.status(400).render('change-password', {
+      pageTitle: 'Change Password',
+      errorMessage: 'The current password is incorrect',
+    });
+  }
+  if (newPassword !== newPasswordConform) {
+    return res.status(400).render('change-password', {
+      pageTitle: 'Change Password',
+      errorMessage: 'The password does not match the confirmation',
+    });
+  }
+
+  if (oldPassword === newPassword) {
+    return res.status(400).render('change-password', {
+      pageTitle: 'Change Password',
+      errorMessage: 'The old password is same with the new password',
+    });
+  }
+
+  user.password = newPassword;
+  await user.save();
+  req.session.destroy();
+  return res.redirect('/login');
+};
+
 export const see = (req, res) => res.send('See User');
-export const remove = (req, res) => res.send('Remove User');
