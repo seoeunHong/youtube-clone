@@ -1,0 +1,20 @@
+.search__form {
+  display: flex;
+  flex-direction: column;
+  max-width: 420px;
+  margin: 0 auto;
+  input {
+    all: unset;
+    padding: 15px 20px;
+    border-radius: 5px;
+    border: 1px solid skyblue;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: skyblue;
+  }
+  input[type='submit'] {
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+  }
+}
