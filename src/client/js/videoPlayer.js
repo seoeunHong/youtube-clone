@@ -125,18 +125,25 @@ const handleMouseMove = () => {
     clearTimeout(controlsTimeout);
     controlsTimeout = null;
   }
-  //cancel old time out
+  // cancel old time out
   if (controlsMovementTimeout) {
     clearTimeout(controlsMovementTimeout);
     controlsMovementTimeout = null;
   }
-  //set new time out
+  // set new time out
   videoControls.classList.add('showing');
   controlsMovementTimeout = setTimeout(hideControls, 3000);
 };
 
 const handleMouseLeave = () => {
   controlsTimeout = setTimeout(hideControls, 3000);
+};
+
+const handleEnded = () => {
+  const {id} = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, {
+    method: 'POST',
+  });
 };
 
 playBtn.addEventListener('click', handlePlayClick);
@@ -146,6 +153,7 @@ video.addEventListener('loadeddata', handleLoadedMetadata);
 video.addEventListener('timeupdate', handleTimeUpdate);
 video.addEventListener('mousemove', handleMouseMove);
 video.addEventListener('mouseleave', handleMouseLeave);
+video.addEventListener('ended', handleEnded);
 timeline.addEventListener('input', handleTimelineChange);
 timeline.addEventListener('change', handleTimelineSet);
 fullScreenBtn.addEventListener('click', handleFullScreen);
